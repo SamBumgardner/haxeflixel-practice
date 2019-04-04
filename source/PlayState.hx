@@ -8,6 +8,7 @@ import flixel.text.FlxText;
 class PlayState extends FlxState
 {
 	public var groundGrp:FlxGroup;
+	public var hero:Hero;
 	
 	override public function create():Void
 	{
@@ -19,14 +20,9 @@ class PlayState extends FlxState
 		}
 		add(groundGrp);
 		
-		var text = new FlxText(0, 0, 0, "hello world", 64);
-		text.screenCenter();
-		add(text);
+		hero = new Hero(150, 50);
+		add(spr);
 		
-		for (i in 0...15) {
-			var spr = new Hero(200, 200);
-			add(spr);
-		}
 	}
 
 	override public function update(elapsed:Float):Void
