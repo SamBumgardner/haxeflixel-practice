@@ -1,22 +1,18 @@
 package;
 
-import flixel.FlxSprite;
+import entities.player.Hero;
 import flixel.FlxState;
-import flixel.text.FlxText;
 
 class PlayState extends FlxState
 {
+	static private var hero:Hero;
+
 	override public function create():Void
 	{
 		super.create();
-		var text = new FlxText(0, 0, 0, "hello world", 64);
-		text.screenCenter();
-		add(text);
-		
-		for (i in 0...15) {
-			var spr = new Hero(200, 200);
-			add(spr);
-		}
+
+		hero = new Hero();
+		add(hero);
 	}
 
 	override public function update(elapsed:Float):Void
