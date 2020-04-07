@@ -5,7 +5,7 @@ import flixel.FlxState;
 
 class PlayState extends FlxState
 {
-	static private var hero:Hero;
+	private var hero:Hero;
 
 	override public function create():Void
 	{
