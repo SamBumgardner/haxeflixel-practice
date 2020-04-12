@@ -7,7 +7,7 @@ class Fireball extends FlxSprite {
     public function new(?X:Float = 0, ?Y:Float = 0) {
         super(X, Y);
         makeGraphic(10, 10, FlxColor.RED);
-
+        // loadGraphic(AssetPaths.Fireball__png);
         velocity.x = 100;
     }
 }

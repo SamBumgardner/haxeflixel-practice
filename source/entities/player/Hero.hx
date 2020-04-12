@@ -1,12 +1,18 @@
 package entities.player;
 
+import flixel.system.FlxSound;
+import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.util.FlxColor;
 import flixel.FlxSprite;
 
 class Hero extends FlxSprite {
-    public static var WIDTH(default, never):Int = 32;
+    public static var SPRITE_WIDTH(default, never):Int = 32;
+    public static var SPRITE_HEIGHT(default, never):Int = 32;
+
+    public static var WIDTH(default, never):Int = 10;
     public static var HEIGHT(default, never):Int = 32;
+    public static var X_OFFSET(default, never):Int = 11;
 
     public static var GRAVITY(default, never):Float = 300;
     public static var TERMINAL_VELOCITY(default, never):Float = 600;
@@ -14,17 +20,37 @@ class Hero extends FlxSprite {
 
     public static var JUMP_SPEED(default, never):Float = -200;
 
+    public static var STAND_ANIMATION:String = "stand";
+    public static var WALK_ANIMATION:String = "walk";
+
     private var leftInput:Bool = false;
     private var rightInput:Bool = false;
     private var jumpInput:Bool = false;
+    
+    private var deathSound:FlxSound;
 
     public function new(?X:Float = 0, ?Y:Float = 0) {
         super(X, Y);
-        makeGraphic(WIDTH, HEIGHT, FlxColor.WHITE);
+        makeGraphic(SPRITE_WIDTH, SPRITE_HEIGHT, FlxColor.WHITE);
+        
+        // Load and initialize animation information for "fancy" graphic.
+        // loadGraphic(AssetPaths.BadRobot__png, true, SPRITE_WIDTH, SPRITE_HEIGHT);
+        // animation.add(STAND_ANIMATION, [0], 0, false);
+        // animation.add(WALK_ANIMATION, [1, 0, 2, 0], 5);
+
+        // animation.play(STAND_ANIMATION);
+
+        // Resize physical width and height to match the visual appearance.
+        // width = WIDTH;
+        // height = HEIGHT;
+        // offset.x = X_OFFSET;
 
         // Set up "gravity" (constant acceleration) and "terminal velocity" (max fall speed)
         acceleration.y = GRAVITY;
         maxVelocity.y = TERMINAL_VELOCITY;
+
+        // Load sounds
+        // deathSound = FlxG.sound.load(AssetPaths.sam_ow__wav);
     }
 
     override function update(elapsed:Float) {
@@ -34,7 +60,16 @@ class Hero extends FlxSprite {
         // Horizontal movement
         var direction:Int = getMoveDirectionCoefficient(leftInput, rightInput);
         velocity.x = X_SPEED * direction;
-       
+        // if (direction < 0) {
+        //     flipX = true;
+        //     animation.play(WALK_ANIMATION);
+        // } else if (direction > 0) {
+        //     flipX = false;
+        //     animation.play(WALK_ANIMATION);
+        // } else {
+        //     animation.play(STAND_ANIMATION);
+        // }
+        
         // Jump
         jump(jumpInput);
 
@@ -80,5 +115,13 @@ class Hero extends FlxSprite {
         if (jumpJustPressed) {
             velocity.y = JUMP_SPEED;
         }
+    }
+
+    /**
+        Simple override of kill, adds in our own custom death sound.
+    **/
+    override function kill() {
+        super.kill();
+        // deathSound.play();
     }
 }
