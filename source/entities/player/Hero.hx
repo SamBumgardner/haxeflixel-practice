@@ -31,26 +31,26 @@ class Hero extends FlxSprite {
 
     public function new(?X:Float = 0, ?Y:Float = 0) {
         super(X, Y);
-        makeGraphic(SPRITE_WIDTH, SPRITE_HEIGHT, FlxColor.WHITE);
+        // makeGraphic(SPRITE_WIDTH, SPRITE_HEIGHT, FlxColor.WHITE);
         
         // Load and initialize animation information for "fancy" graphic.
-        // loadGraphic(AssetPaths.BadRobot__png, true, SPRITE_WIDTH, SPRITE_HEIGHT);
-        // animation.add(STAND_ANIMATION, [0], 0, false);
-        // animation.add(WALK_ANIMATION, [1, 0, 2, 0], 5);
+        loadGraphic(AssetPaths.BadRobot__png, true, SPRITE_WIDTH, SPRITE_HEIGHT);
+        animation.add(STAND_ANIMATION, [0], 0, false);
+        animation.add(WALK_ANIMATION, [1, 0, 2, 0], 5);
 
-        // animation.play(STAND_ANIMATION);
+        animation.play(STAND_ANIMATION);
 
         // Resize physical width and height to match the visual appearance.
-        // width = WIDTH;
-        // height = HEIGHT;
-        // offset.x = X_OFFSET;
+        width = WIDTH;
+        height = HEIGHT;
+        offset.x = X_OFFSET;
 
         // Set up "gravity" (constant acceleration) and "terminal velocity" (max fall speed)
         acceleration.y = GRAVITY;
         maxVelocity.y = TERMINAL_VELOCITY;
 
         // Load sounds
-        // deathSound = FlxG.sound.load(AssetPaths.sam_ow__wav);
+        deathSound = FlxG.sound.load(AssetPaths.sam_ow__wav);
     }
 
     override function update(elapsed:Float) {
@@ -60,15 +60,15 @@ class Hero extends FlxSprite {
         // Horizontal movement
         var direction:Int = getMoveDirectionCoefficient(leftInput, rightInput);
         velocity.x = X_SPEED * direction;
-        // if (direction < 0) {
-        //     flipX = true;
-        //     animation.play(WALK_ANIMATION);
-        // } else if (direction > 0) {
-        //     flipX = false;
-        //     animation.play(WALK_ANIMATION);
-        // } else {
-        //     animation.play(STAND_ANIMATION);
-        // }
+        if (direction < 0) {
+            flipX = true;
+            animation.play(WALK_ANIMATION);
+        } else if (direction > 0) {
+            flipX = false;
+            animation.play(WALK_ANIMATION);
+        } else {
+            animation.play(STAND_ANIMATION);
+        }
         
         // Jump
         jump(jumpInput);
@@ -122,6 +122,6 @@ class Hero extends FlxSprite {
     **/
     override function kill() {
         super.kill();
-        // deathSound.play();
+        deathSound.play();
     }
 }
