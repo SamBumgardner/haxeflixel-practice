@@ -25,6 +25,7 @@ class PlayState extends FlxState
 	{
 		super.create();
 
+
 		hero = new Hero();
 		add(hero);
 
